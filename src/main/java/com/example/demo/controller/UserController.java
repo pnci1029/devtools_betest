@@ -28,7 +28,7 @@ public class UserController {
 
     @GetMapping("/user")
     //@PreAuthorize 해당 어노테이션을 이용하여 권한 2개모두 호출가능하게 설정함
-    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     //현재 Security Context에 저장되어있는 인증정보의 username을 기준으로 한
     //유저 정보 및 권한 정보를 리턴하는 API
     public ResponseEntity<User> getMyUserInfo() {
@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @GetMapping("/user/{username}")
-    @PreAuthorize("hasAnyRole('ADMIN')") //ADMIN 만 호출가능
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')") //ADMIN 만 호출가능
     public ResponseEntity<User> getUserInfo(@PathVariable String username) {
         return ResponseEntity.ok(userService.getUserWithAuthorities(username).get());
     }

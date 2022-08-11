@@ -8,6 +8,6 @@ import java.util.Optional;
 
 //spring data jpa
 public interface UserRepository extends JpaRepository<User, Long> {
-    @EntityGraph(attributePaths = "authorities")
-    Optional<User> findOneWithAuthoritiesByUsername(String username);
+    @EntityGraph(attributePaths = "authorityEntity")
+    Optional<User> findOneWithAuthorityEntityByUsername(String username);
 }

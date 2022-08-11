@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Optional;
 
 import com.example.demo.dto.UserDto;
-import com.example.demo.entity.Authority;
+import com.example.demo.entity.AuthorityEntity;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.util.SecurityUtil;
@@ -29,21 +29,21 @@ public class UserService {
     //UserDto객체의 정보들을 기반으로 권한 객체와 유저 객체를 생성하여 DB저장
 
     public User signup(UserDto userDto) {
-        if (userRepository.findOneWithAuthoritiesByUsername(userDto.getUsername()).orElse(null) != null) {
+        if (userRepository.findOneWithAuthorityEntityByUsername(userDto.getUsername()).orElse(null) != null) {
             throw new RuntimeException("이미 가입되어 있는 유저입니다.");
         }
 
         //해당 메소드롤 생성된 유저는 ROLE_USER권한을 소유해서
         //ROLE_ADMIN 권한만 호출할 수 있는 API는 호출불가능함
-        Authority authority = Authority.builder()
-                .authorityName("ROLE_USER")
-                .build();
+        AuthorityEntity authorityEntity = AuthorityEntity.ROLE_USER;
+//                .authorityName("ROLE_USER")
+//                .build();
 
         User user = User.builder()
                 .username(userDto.getUsername())
                 .password(passwordEncoder.encode(userDto.getPassword()))
                 .nickname(userDto.getNickname())
-                .authorities(Collections.singleton(authority))
+                .authorityEntity(AuthorityEntity.ROLE_USER)
                 .activated(true)
                 .build();
 
@@ -53,13 +53,13 @@ public class UserService {
     @Transactional(readOnly = true)
     //getUserWithAuthorities : username을 파라미터롤 받아 해당유저 정보 및 권한정보 리턴
     public Optional<User> getUserWithAuthorities(String username) {
-        return userRepository.findOneWithAuthoritiesByUsername(username);
+        return userRepository.findOneWithAuthorityEntityByUsername(username);
     }
 
     @Transactional(readOnly = true)
     //getMyUserWithAuthorities : SecurityUtil의 getCurrentUsername()
     //메소드가 리턴하는 username의 유저 및 권한 정보를 리턴함
     public Optional<User> getMyUserWithAuthorities() {
-        return SecurityUtil.getCurrentUsername().flatMap(userRepository::findOneWithAuthoritiesByUsername);
+        return SecurityUtil.getCurrentUsername().flatMap(userRepository::findOneWithAuthorityEntityByUsername);
     }
 }
