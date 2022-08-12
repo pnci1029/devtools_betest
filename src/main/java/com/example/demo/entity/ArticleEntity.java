@@ -27,9 +27,16 @@ public class ArticleEntity {
     @Column(nullable = false)
     private String userName;
 
-    public ArticleEntity(ArticleDto articleDto,String userName ) {
+//    @Column
+//    private Category category;
+
+    @Column
+    private String createdTime;
+
+    public ArticleEntity(ArticleDto articleDto,String userName, String createdTime) {
         this.title = articleDto.getTitle();
         this.content = articleDto.getContent();
         this.userName = userName;
+        this.createdTime = createdTime;
     }
 }
