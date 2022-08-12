@@ -4,10 +4,7 @@ import com.example.demo.dto.ArticleDto;
 import com.example.demo.entity.ArticleEntity;
 import com.example.demo.service.ArticleService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,12 +26,17 @@ public class ArticleController {
     }
 
     @GetMapping("/api/articles")
-    public List<ArticleEntity> getArticles(@ModelAttribute Model model) {
-        String LoginUsername = SecurityContextHolder.getContext().getAuthentication().getName();
-        model.addAttribute("username", LoginUsername);
-        List<ArticleEntity> articleEntity = articleService.getArticles();
-        return articleEntity;
+    public List<ArticleEntity> getArtciels() {
+        return articleService.getArticles();
     }
 
+    @PatchMapping("/api/articles/{id}")
+    public ArticleEntity patchArticles(@PathVariable Long id, @RequestBody ArticleDto dto) {
+        return articleService.patchArticles(dto, id);
+    }
 
+    @DeleteMapping("/api/articles/{id}")
+    public void deleteArticles(@PathVariable Long id) {
+        articleService.deleteArticles(id);
+    }
 }

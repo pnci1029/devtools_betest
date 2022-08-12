@@ -39,10 +39,10 @@ public class UserService {
 //                .authorityName("ROLE_USER")
 //                .build();
 
+//        유저 입력값 빌더
         User user = User.builder()
                 .username(userDto.getUsername())
                 .password(passwordEncoder.encode(userDto.getPassword()))
-                .nickname(userDto.getNickname())
                 .authorityEntity(AuthorityEntity.ROLE_USER)
                 .activated(true)
                 .build();
