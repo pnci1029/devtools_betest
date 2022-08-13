@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.ArticleDto;
+import com.example.demo.dto.ArticleResponseDto;
 import com.example.demo.entity.ArticleEntity;
 import com.example.demo.repository.ArticleRepository;
 import com.example.demo.repository.UserRepository;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -45,10 +47,19 @@ public class ArticleService {
 
 
     @Transactional
-    public List<ArticleEntity> getArticles() {
-        List<ArticleEntity> target = articleRepository.findAll();
-
-        return target;
+    public List<ArticleResponseDto> getArticles() {
+        String LoginUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+        List<ArticleEntity> articleEntity = articleRepository.findAll();
+        List<ArticleResponseDto> articleResponseDtos = new ArrayList<>();
+        for (ArticleEntity articles : articleEntity) {
+            articleResponseDtos.add(new ArticleResponseDto(articles));
+        }
+        for (ArticleResponseDto datas : articleResponseDtos) {
+            if (!datas.getUsername().equals(LoginUsername)) {
+                datas.setIsMyArticles(Boolean.FALSE);
+            }
+        }
+        return articleResponseDtos;
     }
 
     @Transactional

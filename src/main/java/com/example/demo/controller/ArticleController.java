@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.ArticleDto;
+import com.example.demo.dto.ArticleResponseDto;
 import com.example.demo.entity.ArticleEntity;
 import com.example.demo.service.ArticleService;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class ArticleController {
     }
 
     @GetMapping("/api/articles")
-    public List<ArticleEntity> getArtciels() {
+    public List<ArticleResponseDto> getArtciels() {
         return articleService.getArticles();
     }
 
