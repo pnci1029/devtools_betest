@@ -24,6 +24,8 @@ public class ArticleResponseDto {
 
     private String now;
 
+    private int size = 5;
+
     public ArticleResponseDto(ArticleEntity articleEntity) {
         this.id = articleEntity.getId();
         this.title = articleEntity.getTitle();

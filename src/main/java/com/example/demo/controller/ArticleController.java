@@ -21,14 +21,26 @@ public class ArticleController {
         this.articleService = articleService;
     }
 
-    @PostMapping("/api/articles")
-    public void postArticles(@RequestBody ArticleDto articleDto) {
-        articleService.postArticles(articleDto);
-    }
+    //    페이지네이션 완료
+//    @GetMapping("/api/articles")
+//    public List<ArticleResponseDto> getArtciels(
+//            @RequestParam("size") int size,
+//            @RequestParam("page") int page
+//    ) {
+////        4. 클라이언트 입장에서는 페이지가 1페이지부터 시작해서 1빼줌
+//        page = page - 1;
+//        return articleService.getArticles(size, page);
+//    }
 
     @GetMapping("/api/articles")
     public List<ArticleResponseDto> getArtciels() {
+//        4. 클라이언트 입장에서는 페이지가 1페이지부터 시작해서 1빼줌
         return articleService.getArticles();
+    }
+
+    @PostMapping("/api/articles")
+    public void postArticles(@RequestBody ArticleDto articleDto) {
+        articleService.postArticles(articleDto);
     }
 
     @PatchMapping("/api/articles/{id}")

@@ -4,20 +4,39 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class HomeController {
 
-    @GetMapping("/test")
+    @GetMapping("/")
     public String getget(Model model) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        model.addAttribute("username", username);
+        String loginUser = "테스트이름";
+        model.addAttribute("loginUser", loginUser);
         return "index";
     }
 
-    @GetMapping("/logins")
+    @GetMapping("/login")
     public String adad() {
         return "login";
+    }
+
+    @GetMapping("/signup")
+    public String adddad() {
+        return "signup";
+    }
+
+    @PostMapping("/signup")
+    public String adada() {
+        return "redirect:/login.html";
+    }
+
+    @GetMapping("/hello")
+    public String adsdas(Model model) {
+        String testName = "하하호호";
+        model.addAttribute("testest", testName);
+        return "testest";
     }
 
 

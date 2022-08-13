@@ -36,8 +36,6 @@ public class UserService {
         //해당 메소드롤 생성된 유저는 ROLE_USER권한을 소유해서
         //ROLE_ADMIN 권한만 호출할 수 있는 API는 호출불가능함
         AuthorityEntity authorityEntity = AuthorityEntity.ROLE_USER;
-//                .authorityName("ROLE_USER")
-//                .build();
 
 //        유저 입력값 빌더
         User user = User.builder()
